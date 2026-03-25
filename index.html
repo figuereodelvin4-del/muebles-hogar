@@ -8,34 +8,40 @@
 <style>
 
 body{
-margin:0;
 font-family:Arial;
+margin:0;
 background:#f4f4f4;
 }
 
 header{
-background:#2c2c2c;
+background:#111;
 color:white;
 padding:20px;
-text-align:center;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
 }
 
-nav{
-background:#444;
+header h1{
+margin:0;
+}
+
+#search{
+padding:8px;
+border-radius:5px;
+border:none;
+}
+
+.cart{
+background:#27ae60;
 padding:10px;
-text-align:center;
-}
-
-nav a{
-color:white;
-margin:15px;
-text-decoration:none;
-font-weight:bold;
+border-radius:5px;
 }
 
 .hero{
 background:url("https://images.unsplash.com/photo-1618220179428-22790b461013") center/cover;
-height:350px;
+height:300px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -45,49 +51,64 @@ font-weight:bold;
 }
 
 .container{
-padding:40px;
+padding:30px;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
 }
 
 .card{
 background:white;
 border-radius:10px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
-overflow:hidden;
 text-align:center;
+padding:10px;
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
 }
 
 .card img{
 width:100%;
-}
-
-.card h3{
-margin:10px;
+border-radius:10px;
 }
 
 .price{
 color:#27ae60;
-font-size:20px;
 font-weight:bold;
+font-size:18px;
 }
 
-.btn{
-display:inline-block;
-background:#25D366;
+button{
+background:#27ae60;
+border:none;
 color:white;
-padding:10px 20px;
-margin:10px;
+padding:10px;
 border-radius:5px;
-text-decoration:none;
+cursor:pointer;
+}
+
+#cart{
+background:white;
+margin-top:30px;
+padding:20px;
+border-radius:10px;
+}
+
+.checkout{
+background:#111;
+width:100%;
+padding:12px;
+margin-top:15px;
 }
 
 footer{
-background:#222;
+background:#111;
 color:white;
 text-align:center;
 padding:20px;
@@ -100,63 +121,135 @@ margin-top:40px;
 <body>
 
 <header>
+
 <h1>Muebles Hogar</h1>
-<p>Los mejores muebles para tu casa</p>
+
+<input type="text" id="search" placeholder="Buscar muebles..." onkeyup="buscar()">
+
+<div class="cart">
+🛒 Carrito: <span id="cartCount">0</span>
+</div>
+
 </header>
 
-<nav>
-<a href="#">Inicio</a>
-<a href="#">Productos</a>
-<a href="#">Contacto</a>
-</nav>
-
 <div class="hero">
-Elegancia para tu hogar
+Muebles modernos para tu hogar
 </div>
 
 <div class="container">
 
-<h2>Productos Destacados</h2>
+<h2>Catálogo</h2>
 
-<div class="grid">
+<div class="grid" id="productos">
 
-<div class="card">
+<div class="card" data-name="sofa">
 <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc">
 <h3>Sofá Moderno</h3>
 <p class="price">RD$25,000</p>
-<a class="btn" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
+<button onclick="addCart('Sofá Moderno',25000)">Agregar</button>
 </div>
 
-<div class="card">
+<div class="card" data-name="cama">
 <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85">
 <h3>Cama King</h3>
 <p class="price">RD$35,000</p>
-<a class="btn" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
+<button onclick="addCart('Cama King',35000)">Agregar</button>
 </div>
 
-<div class="card">
+<div class="card" data-name="mesa">
 <img src="https://images.unsplash.com/photo-1588854337221-4cf9fa96059c">
-<h3>Mesa de Comedor</h3>
+<h3>Mesa Comedor</h3>
 <p class="price">RD$18,000</p>
-<a class="btn" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
+<button onclick="addCart('Mesa Comedor',18000)">Agregar</button>
 </div>
 
-<div class="card">
+<div class="card" data-name="silla">
 <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed">
 <h3>Silla Moderna</h3>
 <p class="price">RD$4,500</p>
-<a class="btn" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
+<button onclick="addCart('Silla Moderna',4500)">Agregar</button>
 </div>
+
+</div>
+
+<div id="cart">
+
+<h2>Carrito</h2>
+
+<ul id="items"></ul>
+
+<h3>Total: RD$<span id="total">0</span></h3>
+
+<button class="checkout" onclick="pagar()">Comprar por WhatsApp</button>
 
 </div>
 
 </div>
 
 <footer>
-<p>📍 Santo Domingo, República Dominicana</p>
+
+<p>📍 Azua de Compostela, República Dominicana</p>
 <p>📞 809-546-2835</p>
 <p>© 2026 Muebles Hogar</p>
+
 </footer>
+
+<script>
+
+let cart=[]
+let total=0
+
+function addCart(nombre,precio){
+
+cart.push({nombre,precio})
+
+total+=precio
+
+document.getElementById("cartCount").innerText=cart.length
+document.getElementById("total").innerText=total
+
+let li=document.createElement("li")
+li.innerText=nombre+" - RD$"+precio
+
+document.getElementById("items").appendChild(li)
+
+}
+
+function buscar(){
+
+let input=document.getElementById("search").value.toLowerCase()
+
+let cards=document.querySelectorAll(".card")
+
+cards.forEach(card=>{
+
+let name=card.dataset.name
+
+if(name.includes(input)){
+card.style.display="block"
+}else{
+card.style.display="none"
+}
+
+})
+
+}
+
+function pagar(){
+
+let mensaje="Hola quiero comprar:%0A"
+
+cart.forEach(item=>{
+mensaje+=item.nombre+" - RD$"+item.precio+"%0A"
+})
+
+mensaje+="Total: RD$"+total
+
+window.open("https://wa.me/18090000000?text="+mensaje)
+
+}
+
+</script>
 
 </body>
 </html>
