@@ -315,7 +315,22 @@ function toggleCart(){
 
 document.getElementById("cartPanel").classList.toggle("open")
 
+}function comprarWhatsApp(){
+
+if(cart.length===0){
+alert("El carrito está vacío")
+return
 }
+
+let mensaje="Hola, quiero comprar:%0A"
+
+cart.forEach(p=>{
+mensaje+=p.name+" - RD$"+p.precio+"%0A"
+})
+
+mensaje+="Total: RD$"+total
+
+window.open("https://wa.me/18090000000?text="+mensaje)
 
 </script>
 
