@@ -3,33 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muebles Deluxe</title>
+<title>Muebles Hogar</title>
 
 <style>
 
 body{
-font-family: Arial;
 margin:0;
+font-family:Arial;
 background:#f4f4f4;
 }
 
 header{
-background:#5a3e2b;
+background:#2c2c2c;
 color:white;
 padding:20px;
 text-align:center;
 }
 
 nav{
-background:#222;
+background:#444;
 padding:10px;
 text-align:center;
 }
 
 nav a{
 color:white;
-text-decoration:none;
 margin:15px;
+text-decoration:none;
 font-weight:bold;
 }
 
@@ -40,7 +40,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 color:white;
-font-size:40px;
+font-size:35px;
 font-weight:bold;
 }
 
@@ -48,7 +48,7 @@ font-weight:bold;
 padding:40px;
 }
 
-.productos{
+.grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:25px;
@@ -57,30 +57,33 @@ gap:25px;
 .card{
 background:white;
 border-radius:10px;
-box-shadow:0 5px 10px rgba(0,0,0,0.1);
-padding:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+overflow:hidden;
 text-align:center;
 }
 
 .card img{
 width:100%;
-border-radius:10px;
 }
 
-.precio{
-color:#5a3e2b;
-font-size:22px;
+.card h3{
+margin:10px;
+}
+
+.price{
+color:#27ae60;
+font-size:20px;
 font-weight:bold;
 }
 
-.boton{
+.btn{
 display:inline-block;
 background:#25D366;
 color:white;
 padding:10px 20px;
+margin:10px;
 border-radius:5px;
 text-decoration:none;
-margin-top:10px;
 }
 
 footer{
@@ -88,6 +91,7 @@ background:#222;
 color:white;
 text-align:center;
 padding:20px;
+margin-top:40px;
 }
 
 </style>
@@ -96,8 +100,8 @@ padding:20px;
 <body>
 
 <header>
-<h1>Muebles Deluxe</h1>
-<p>Elegancia y comodidad para tu hogar</p>
+<h1>Muebles Hogar</h1>
+<p>Los mejores muebles para tu casa</p>
 </header>
 
 <nav>
@@ -107,41 +111,41 @@ padding:20px;
 </nav>
 
 <div class="hero">
-Los Mejores Muebles Para Tu Hogar
+Elegancia para tu hogar
 </div>
 
 <div class="container">
 
-<h2>Productos</h2>
+<h2>Productos Destacados</h2>
 
-<div class="productos">
+<div class="grid">
 
 <div class="card">
 <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc">
 <h3>Sofá Moderno</h3>
-<p class="precio">$450</p>
-<a class="boton" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
+<p class="price">RD$25,000</p>
+<a class="btn" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
 </div>
 
 <div class="card">
 <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85">
 <h3>Cama King</h3>
-<p class="precio">$700</p>
-<a class="boton" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
+<p class="price">RD$35,000</p>
+<a class="btn" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
 </div>
 
 <div class="card">
 <img src="https://images.unsplash.com/photo-1588854337221-4cf9fa96059c">
 <h3>Mesa de Comedor</h3>
-<p class="precio">$350</p>
-<a class="boton" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
+<p class="price">RD$18,000</p>
+<a class="btn" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
 </div>
 
 <div class="card">
 <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed">
 <h3>Silla Moderna</h3>
-<p class="precio">$90</p>
-<a class="boton" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
+<p class="price">RD$4,500</p>
+<a class="btn" href="https://wa.me/18090000000">Comprar por WhatsApp</a>
 </div>
 
 </div>
@@ -151,7 +155,7 @@ Los Mejores Muebles Para Tu Hogar
 <footer>
 <p>📍 Santo Domingo, República Dominicana</p>
 <p>📞 809-000-0000</p>
-<p>© 2026 Muebles Deluxe</p>
+<p>© 2026 Muebles Hogar</p>
 </footer>
 
 </body>
