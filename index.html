@@ -243,6 +243,41 @@ cart.forEach(item=>{
 mensaje+=item.nombre+" - RD$"+item.precio+"%0A"
 })
 
+})
+
+document.getElementById("total").innerText=total
+
+}
+
+function removeItem(i){
+
+total-=cart[i].precio
+
+cart.splice(i,1)
+
+document.getElementById("cartCount").innerText=cart.length
+
+renderCart()
+
+}
+
+function toggleCart(){
+
+document.getElementById("cartPanel").classList.toggle("open")
+
+}
+
+function buscar(){
+
+let input=document.getElementById("search").value.toLowerCase()
+
+let cards=document.querySelectorAll(".card")
+
+cards.forEach(card=>{
+
+let name=card.dataset.name
+
+card.style.display=name.includes(input)?"block":"none"
 mensaje+="Total: RD$"+total
 
 window.open("https://wa.me/18090000000?text="+mensaje)
