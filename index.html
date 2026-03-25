@@ -23,10 +23,6 @@ align-items:center;
 flex-wrap:wrap;
 }
 
-header h1{
-margin:0;
-}
-
 #search{
 padding:8px;
 border-radius:5px;
@@ -37,6 +33,7 @@ border:none;
 background:#27ae60;
 padding:10px;
 border-radius:5px;
+cursor:pointer;
 }
 
 .hero{
@@ -93,18 +90,55 @@ border-radius:5px;
 cursor:pointer;
 }
 
-#cart{
+#cartPanel{
+position:fixed;
+right:-350px;
+top:0;
+width:320px;
+height:100%;
 background:white;
-margin-top:30px;
+box-shadow:-4px 0 10px rgba(0,0,0,0.2);
 padding:20px;
-border-radius:10px;
+transition:0.4s;
+overflow:auto;
 }
 
-.checkout{
-background:#111;
+#cartPanel.open{
+right:0;
+}
+
+.closeCart{
+background:red;
+color:white;
+padding:5px 8px;
+border:none;
+cursor:pointer;
+float:right;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+}
+
+.remove{
+background:red;
+color:white;
+border:none;
+padding:4px;
+cursor:pointer;
+}
+
+.whatsapp{
+background:#25D366;
+color:white;
 width:100%;
 padding:12px;
-margin-top:15px;
+border:none;
+border-radius:6px;
+margin-top:10px;
+cursor:pointer;
 }
 
 footer{
@@ -126,7 +160,7 @@ margin-top:40px;
 
 <input type="text" id="search" placeholder="Buscar muebles..." onkeyup="buscar()">
 
-<div class="cart">
+<div class="cart" onclick="toggleCart()">
 🛒 Carrito: <span id="cartCount">0</span>
 </div>
 
@@ -140,7 +174,7 @@ Muebles modernos para tu hogar
 
 <h2>Catálogo</h2>
 
-<div class="grid" id="productos">
+<div class="grid">
 
 <div class="card" data-name="sofa">
 <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc">
@@ -172,17 +206,20 @@ Muebles modernos para tu hogar
 
 </div>
 
-<div id="cart">
+</div>
+
+<!-- PANEL DEL CARRITO -->
+<div id="cartPanel">
+
+<button class="closeCart" onclick="toggleCart()">X</button>
 
 <h2>Carrito</h2>
 
-<ul id="items"></ul>
+<div id="cartItems"></div>
 
 <h3>Total: RD$<span id="total">0</span></h3>
 
-<button class="checkout" onclick="pagar()">Comprar por WhatsApp</button>
-
-</div>
+<button class="whatsapp" onclick="comprarWhatsApp()">Comprar por WhatsApp</button>
 
 </div>
 
@@ -206,42 +243,24 @@ cart.push({nombre,precio})
 total+=precio
 
 document.getElementById("cartCount").innerText=cart.length
-document.getElementById("total").innerText=total
 
-let li=document.createElement("li")
-li.innerText=nombre+" - RD$"+precio
-
-document.getElementById("items").appendChild(li)
+renderCart()
 
 }
 
-function buscar(){
+function renderCart(){
 
-let input=document.getElementById("search").value.toLowerCase()
+let cont=document.getElementById("cartItems")
+cont.innerHTML=""
 
-let cards=document.querySelectorAll(".card")
+cart.forEach((item,i)=>{
 
-cards.forEach(card=>{
-
-let name=card.dataset.name
-
-if(name.includes(input)){
-card.style.display="block"
-}else{
-card.style.display="none"
-}
-
-})
-
-}
-
-function pagar(){
-
-let mensaje="Hola quiero comprar:%0A"
-
-cart.forEach(item=>{
-mensaje+=item.nombre+" - RD$"+item.precio+"%0A"
-})
+cont.innerHTML+=`
+<div class="cart-item">
+${item.nombre} - RD$${item.precio}
+<button class="remove" onclick="removeItem(${i})">X</button>
+</div>
+`
 
 })
 
@@ -252,7 +271,6 @@ document.getElementById("total").innerText=total
 function removeItem(i){
 
 total-=cart[i].precio
-
 cart.splice(i,1)
 
 document.getElementById("cartCount").innerText=cart.length
@@ -270,14 +288,31 @@ document.getElementById("cartPanel").classList.toggle("open")
 function buscar(){
 
 let input=document.getElementById("search").value.toLowerCase()
-
 let cards=document.querySelectorAll(".card")
 
 cards.forEach(card=>{
 
 let name=card.dataset.name
 
-card.style.display=name.includes(input)?"block":"none"
+card.style.display = name.includes(input) ? "block" : "none"
+
+})
+
+}
+
+function comprarWhatsApp(){
+
+if(cart.length===0){
+alert("El carrito está vacío")
+return
+}
+
+let mensaje="Hola quiero comprar:%0A"
+
+cart.forEach(item=>{
+mensaje+=item.nombre+" - RD$"+item.precio+"%0A"
+})
+
 mensaje+="Total: RD$"+total
 
 window.open("https://wa.me/18090000000?text="+mensaje)
