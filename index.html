@@ -3,37 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muebles Store</title>
+<title>Muebles Hogar</title>
 
 <style>
 
 body{
-margin:0;
 font-family:Arial;
-background:#f5f5f5;
+margin:0;
+background:#f4f4f4;
 }
 
 header{
-background:#131921;
+background:#111;
 color:white;
-padding:15px;
+padding:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+flex-wrap:wrap;
+}
+
+header h1{
+margin:0;
 }
 
 #search{
 padding:8px;
+border-radius:5px;
 border:none;
-border-radius:4px;
-width:200px;
 }
 
-.cart-btn{
-background:#febd69;
-padding:8px 12px;
+.cart{
+background:#27ae60;
+padding:10px;
 border-radius:5px;
-cursor:pointer;
+}
+
+.hero{
+background:url("https://images.unsplash.com/photo-1618220179428-22790b461013") center/cover;
+height:300px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:35px;
+font-weight:bold;
 }
 
 .container{
@@ -42,96 +56,59 @@ padding:30px;
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 }
 
 .card{
 background:white;
-border-radius:8px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
-padding:10px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 text-align:center;
-transition:0.4s;
-animation:fadeIn 0.6s ease;
+padding:10px;
+transition:0.3s;
 }
 
 .card:hover{
-transform:translateY(-8px) scale(1.04);
-box-shadow:0 8px 25px rgba(0,0,0,0.2);
+transform:scale(1.05);
 }
 
 .card img{
 width:100%;
-border-radius:8px;
+border-radius:10px;
 }
 
 .price{
-color:#B12704;
+color:#27ae60;
 font-weight:bold;
 font-size:18px;
 }
 
-.desc{
-font-size:14px;
-color:#555;
-}
-
 button{
-background:#ffd814;
+background:#27ae60;
 border:none;
-padding:8px 12px;
+color:white;
+padding:10px;
 border-radius:5px;
 cursor:pointer;
 }
 
-#cartPanel{
-position:fixed;
-right:-350px;
-top:0;
-width:320px;
-height:100%;
+#cart{
 background:white;
-box-shadow:-4px 0 10px rgba(0,0,0,0.2);
+margin-top:30px;
 padding:20px;
-transition:0.4s;
-overflow:auto;
+border-radius:10px;
 }
 
-#cartPanel.open{
-right:0;
-}
-
-.closeCart{
-background:red;
-color:white;
-padding:5px 8px;
-border:none;
-cursor:pointer;
-float:right;
-}
-
-.cart-item{
-display:flex;
-justify-content:space-between;
-margin-bottom:10px;
-}
-
-.remove{
-background:red;
-color:white;
-border:none;
-padding:4px;
-cursor:pointer;
-}
-
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(10px)}
-to{opacity:1; transform:translateY(0)}
+.checkout{
+background:#111;
+width:100%;
+padding:12px;
+margin-top:15px;
 }
 
 footer{
-background:#131921;
+background:#111;
 color:white;
 text-align:center;
 padding:20px;
@@ -145,192 +122,132 @@ margin-top:40px;
 
 <header>
 
-<h2>Figuereo Muebles</h2>
+<h1>Muebles Hogar</h1>
 
-<input id="search" placeholder="Buscar muebles..." onkeyup="buscar()">
+<input type="text" id="search" placeholder="Buscar muebles..." onkeyup="buscar()">
 
-<div class="cart-btn" onclick="toggleCart()">🛒 (<span id="cartCount">0</span>)</div>
+<div class="cart">
+🛒 Carrito: <span id="cartCount">0</span>
+</div>
 
 </header>
 
+<div class="hero">
+Muebles modernos para tu hogar
+</div>
+
 <div class="container">
 
-<div class="grid" id="productos"></div>
+<h2>Catálogo</h2>
+
+<div class="grid" id="productos">
+
+<div class="card" data-name="sofa">
+<img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc">
+<h3>Sofá Moderno</h3>
+<p class="price">RD$25,000</p>
+<button onclick="addCart('Sofá Moderno',25000)">Agregar</button>
+</div>
+
+<div class="card" data-name="cama">
+<img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85">
+<h3>Cama King</h3>
+<p class="price">RD$35,000</p>
+<button onclick="addCart('Cama King',35000)">Agregar</button>
+</div>
+
+<div class="card" data-name="mesa">
+<img src="https://images.unsplash.com/photo-1588854337221-4cf9fa96059c">
+<h3>Mesa Comedor</h3>
+<p class="price">RD$18,000</p>
+<button onclick="addCart('Mesa Comedor',18000)">Agregar</button>
+</div>
+
+<div class="card" data-name="silla">
+<img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed">
+<h3>Silla Moderna</h3>
+<p class="price">RD$4,500</p>
+<button onclick="addCart('Silla Moderna',4500)">Agregar</button>
+</div>
 
 </div>
 
-<div id="cartPanel">
-
-<button class="closeCart" onclick="toggleCart()">X</button>
+<div id="cart">
 
 <h2>Carrito</h2>
 
-<div id="cartItems"></div>
+<ul id="items"></ul>
 
 <h3>Total: RD$<span id="total">0</span></h3>
+
+<button class="checkout" onclick="pagar()">Comprar por WhatsApp</button>
+
+</div>
 
 </div>
 
 <footer>
-<p>📍Azua de Compostela R.D</p>
+
+<p>📍 Santo Domingo, República Dominicana</p>
+<p>📞 809-000-0000</p>
+<p>© 2026 Muebles Hogar</p>
+
 </footer>
 
 <script>
 
-let productos=[
-
-{name:"Sofá Elegante",precio:25400,
-img:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc",
-desc:"Sofá moderno y cómodo para sala."},
-
-{name:"Comedor Familiar",precio:38750,
-img:"https://images.unsplash.com/photo-1615874959474-d609969a20ed",
-desc:"Juego de comedor ideal para 6 personas."},
-
-{name:"Silla Moderna",precio:4620,
-img:"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-desc:"Silla minimalista perfecta para comedor."},
-
-{name:"Mesa Centro Madera",precio:8900,
-img:"https://images.unsplash.com/photo-1505691723518-36a5ac3b2d88",
-desc:"Mesa elegante para sala."},
-
-{name:"Sillón Lounge",precio:14870,
-img:"https://images.unsplash.com/photo-1493666438817-866a91353ca9",
-desc:"Sillón cómodo para descanso."},
-
-{name:"Estante Moderno",precio:9230,
-img:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7",
-desc:"Estante decorativo para libros y adornos."}
-
-]
-
 let cart=[]
 let total=0
 
-function mostrarInicio(){
+function addCart(nombre,precio){
 
-let cont=document.getElementById("productos")
-cont.innerHTML=""
+cart.push({nombre,precio})
 
-for(let i=0;i<2;i++){
+total+=precio
 
-let p=productos[i]
+document.getElementById("cartCount").innerText=cart.length
+document.getElementById("total").innerText=total
 
-cont.innerHTML+=crearCard(p,i)
+let li=document.createElement("li")
+li.innerText=nombre+" - RD$"+precio
 
-}
-
-}
-
-function crearCard(p,i){
-
-return `
-<div class="card" data-name="${p.name.toLowerCase()}">
-
-<img src="${p.img}">
-<h3>${p.name}</h3>
-
-<p class="desc">${p.desc}</p>
-
-<p class="price">RD$${p.precio}</p>
-
-<button onclick="addCart(${i})">Agregar</button>
-
-</div>
-`
+document.getElementById("items").appendChild(li)
 
 }
-
-mostrarInicio()
 
 function buscar(){
 
 let input=document.getElementById("search").value.toLowerCase()
 
-let cont=document.getElementById("productos")
+let cards=document.querySelectorAll(".card")
 
-cont.innerHTML=""
+cards.forEach(card=>{
 
-productos.forEach((p,i)=>{
+let name=card.dataset.name
 
-if(p.name.toLowerCase().includes(input)){
-
-cont.innerHTML+=crearCard(p,i)
-
+if(name.includes(input)){
+card.style.display="block"
+}else{
+card.style.display="none"
 }
 
 })
 
 }
 
-function addCart(i){
+function pagar(){
 
-let p=productos[i]
+let mensaje="Hola quiero comprar:%0A"
 
-cart.push(p)
-
-total+=p.precio
-
-document.getElementById("cartCount").innerText=cart.length
-
-renderCart()
-
-}
-
-function renderCart(){
-
-let cont=document.getElementById("cartItems")
-
-cont.innerHTML=""
-
-cart.forEach((p,i)=>{
-
-cont.innerHTML+=`
-<div class="cart-item">
-${p.name}
-<button class="remove" onclick="removeItem(${i})">X</button>
-</div>
-`
-
-})
-
-document.getElementById("total").innerText=total
-
-}
-
-function removeItem(i){
-
-total-=cart[i].precio
-
-cart.splice(i,1)
-
-document.getElementById("cartCount").innerText=cart.length
-
-renderCart()
-
-}
-
-function toggleCart(){
-
-document.getElementById("cartPanel").classList.toggle("open")
-
-}function comprarWhatsApp(){
-
-if(cart.length===0){
-alert("El carrito está vacío")
-return
-}
-
-let mensaje="Hola, quiero comprar:%0A"
-
-cart.forEach(p=>{
-mensaje+=p.name+" - RD$"+p.precio+"%0A"
+cart.forEach(item=>{
+mensaje+=item.nombre+" - RD$"+item.precio+"%0A"
 })
 
 mensaje+="Total: RD$"+total
 
-window.open("https://wa.me/18095462835?text="+mensaje)
+window.open("https://wa.me/18090000000?text="+mensaje)
+
+}
 
 </script>
 
